@@ -13,9 +13,12 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::middleware('auth:api')->get('/customer', function (Request $request) {
     return $request->user();
 });
 Route::apiResource('/candidates','CandidateController');
 Route::apiResource('/positions','PositionController');
 Route::apiResource('/votes','VoteController');
+Route::group(['prefix'=>'candidates'],function(){
+    Route::apiResource('/{candidate}/position','PositionController');
+});

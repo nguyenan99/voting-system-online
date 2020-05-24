@@ -2282,7 +2282,7 @@ var EventApi = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(EventApi.prototype, "classNames", {
-        // NOTE: user can't modify these because Object.freeze was called in event-def parsing
+        // NOTE: customer can't modify these because Object.freeze was called in event-def parsing
         get: function () { return this._def.ui.classNames; },
         enumerable: true,
         configurable: true
@@ -3023,7 +3023,7 @@ function parseEventDef(raw, sourceId, allDay, hasEnd, calendar) {
         leftovers = newLeftovers;
     }
     def.extendedProps = __assign(leftovers, def.extendedProps || {});
-    // help out EventApi from having user modify props
+    // help out EventApi from having customer modify props
     Object.freeze(def.ui.classNames);
     Object.freeze(def.extendedProps);
     return def;
@@ -3940,12 +3940,12 @@ var DateComponent = /** @class */ (function (_super) {
     renderEventDragSegs(state: EventSegUiInteractionState) {
       if (state) {
         let { isEvent, segs, sourceSeg } = state
-  
+
         if (this.eventRenderer) {
           this.eventRenderer.hideByHash(state.affectedInstances)
         }
-  
-        // if the user is dragging something that is considered an event with real event data,
+
+        // if the customer is dragging something that is considered an event with real event data,
         // and this component likes to do drag mirrors OR the component where the seg came from
         // likes to do drag mirrors, then render a drag mirror.
         if (isEvent && (this.doesDragMirror || sourceSeg && sourceSeg.component.doesDragMirror)) {
@@ -3953,7 +3953,7 @@ var DateComponent = /** @class */ (function (_super) {
             this.mirrorRenderer.renderSegs(segs, { isDragging: true, sourceSeg })
           }
         }
-  
+
         // if it would be impossible to render a drag mirror OR this component likes to render
         // highlights, then render a highlight.
         if (!isEvent || this.doesDragHighlight) {
@@ -4400,7 +4400,7 @@ function expandRanges(daysOfWeek, startTime, framingRange, dateEnv) {
     var endMarker = framingRange.end;
     var instanceStarts = [];
     while (dayMarker < endMarker) {
-        var instanceStart 
+        var instanceStart
         // if everyday, or this particular day-of-week
         = void 0;
         // if everyday, or this particular day-of-week
@@ -6406,7 +6406,7 @@ function interactionSettingsToStore(settings) {
 var interactionSettingsStore = {};
 
 /*
-Detects when the user clicks on an event within a DateComponent
+Detects when the customer clicks on an event within a DateComponent
 */
 var EventClicking = /** @class */ (function (_super) {
     __extends(EventClicking, _super);
@@ -6442,7 +6442,7 @@ var EventClicking = /** @class */ (function (_super) {
 }(Interaction));
 
 /*
-Triggers events and adds/removes core classNames when the user's pointer
+Triggers events and adds/removes core classNames when the customer's pointer
 enters/leaves event-elements of a component.
 */
 var EventHovering = /** @class */ (function (_super) {

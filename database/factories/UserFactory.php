@@ -21,8 +21,8 @@ $factory->define(User::class, function (Faker $faker) {
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),
-        'role' => 1,
-        'password' =>'$2y$10$YhTEA0AtltmRFuSZ5p0jWOOWu1eufQX/71sfg58YqutxST7D6VjPK', // password
+        'role' => 0,
+        'password' =>bcrypt('matkhau'), // password
         'remember_token' => Str::random(10),
     ];
 });

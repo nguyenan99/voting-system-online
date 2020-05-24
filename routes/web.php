@@ -56,6 +56,7 @@ Route::group(['prefix'=>'admin','middleware'=>['checkLogin','checkAdmin']],funct
     Route::get('result2', 'CandidateController@Winner');
     Route::get('result3','CandidateController@voteOfPosition');
     Route::resource('column-searching', 'ColumnSearchingController');
+
 });
 
 

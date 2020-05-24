@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\RegisteredUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use Mail;
 //use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Hash;
 //use Auth;
@@ -85,7 +87,7 @@ class UserController extends Controller
                 'email.required'=>'Bạn phải nhập email',
                 'email.min'=>'Tên quá ngắn',
                 'email.max'=>'Tên quá dài',
-                'email.unique'=>'Đã email này',
+                'email.unique'=>'Đã có email này',
                 'password.required'=>'Bạn phải nhập email',
                 'password.min'=>'password quá ngắn',
                 'password.max'=>'password quá dài',
@@ -145,14 +147,14 @@ class UserController extends Controller
         Auth::logout();
         return redirect('login');
     }
-    //
+    // dang ky tai khoan khach
     public function getRegister(){
         return view('register');
     }
     public function postRegister(Request $request){
         $this->validate($request,
             [
-                'name' => 'required|min:3|max:100|unique:users,name',
+                'name' => 'required|min:3|max:100',
                 'email' => 'required|min:6|max:50|unique:users,email',
                 'password' => 'required|min:6|max:20',
                 're_password' =>'required|same:password'
@@ -161,7 +163,7 @@ class UserController extends Controller
                 'name.required'=>'Bạn phải nhập tên',
                 'name.min'=>'Tên quá ngắn',
                 'name.max'=>'Tên quá dài',
-                'name.unique'=>'Đã có tên người dùng này',
+//                'name.unique'=>'Đã có tên người dùng này',
                 'email.required'=>'Bạn phải nhập email',
                 'email.min'=>'Tên quá ngắn',
                 'email.max'=>'Tên quá dài',
@@ -178,7 +180,11 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->password = Hash::make($request->password); // mã hóa password
         $user->role = 0;
+        $email = new RegisteredUser($user);
+        Mail::to($user->email)
+            ->send($email);
         $user->save();
+
         return redirect('/login')->with('thongbao', 'Them thanh cong');
     }
     //
